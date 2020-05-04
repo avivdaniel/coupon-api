@@ -16,7 +16,7 @@ client.connect((err) => {
     console.log('connection successful to the cupon-app DB');
 });
 
-app.put('/cupon', (req, res) => {
+app.put('/coupon', (req, res) => {
     db.collection('coupons').insertOne({
         code: generateRandomCodeCupon(),
         date: new Date().toDateString,
@@ -31,13 +31,26 @@ app.put('/cupon', (req, res) => {
     });
 });
 
-app.get('/cupon', (req, res) => {
+app.get('/coupon', (req, res) => {
     db.collection('coupons').find().toArray((err, cupons) => {
         if (err) {
             console.log(err);
             res.send(404);
         }
         res.json(cupons);
+    });
+});
+
+app.get('/coupon/:id', (req, res) => {
+    db.collection('coupons').findOne({
+        _id: ObjectId(req.params.id)
+    }, (err, foundedCoupon) => {
+        if (err) {
+            console.log(err);
+            res.sendStatus(500);
+            return;
+        }
+        res.json(foundedCoupon);
     });
 });
 
