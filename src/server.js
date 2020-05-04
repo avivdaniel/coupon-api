@@ -19,7 +19,7 @@ client.connect((err) => {
 app.put('/cupon', (req, res) => {
     db.collection('coupons').insertOne({
         code: generateRandomCodeCupon(),
-        date: new Date(),
+        date: new Date().toDateString,
         isRedeen: false
     }, (err, newCupon) => {
         if (err) {
@@ -32,7 +32,13 @@ app.put('/cupon', (req, res) => {
 });
 
 app.get('/cupon', (req, res) => {
-    res.send('This is the users get page!');
+    db.collection('coupons').find().toArray((err, cupons) => {
+        if (err) {
+            console.log(err);
+            res.send(404);
+        }
+        res.json(cupons);
+    });
 });
 
 app.listen(3000, () => {
