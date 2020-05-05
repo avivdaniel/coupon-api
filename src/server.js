@@ -37,7 +37,7 @@ app.get('/coupon', (req, res) => {
             console.log(err);
             res.send(400);
         }
-        res.sendStatus(200).json(cupons);
+        res.json(cupons).sendStatus(200);
     });
 });
 
@@ -51,7 +51,7 @@ app.get('/coupon/:id', (req, res) => {
             res.sendStatus(404);
             return;
         }
-        res.sendStatus(200).json(foundedCoupon);
+        res.json(foundedCoupon).sendStatus(200);
     });
 });
 
@@ -73,45 +73,24 @@ app.post('/coupon/:id', (req, res) => {
 });
 
 
-// app.post('/coupon/:id/:blabl', (req, res) => {
-//     const couponId = ObjectId(req.params.id);
-//     db.collection('coupons').findOneAndUpdate(
-//         { _id: couponId },
-//         { $set: { isRedeen: true } },
-//         { returnNewDocument: true },
-//         (err, foundedCoupon) => {
-//             console.log(foundedCoupon)
-//         }
-//     );
-//     res.send('hey!')
-// });
+app.post('/coupon/:id/redeem', (req, res) => {
+    const couponId = ObjectId(req.params.id);
+    db.collection('coupons').findOneAndUpdate(
+        { _id: couponId },
+        { $set: { isRedeen: true } },
+        { returnNewDocument: true },
+        (err, updatedCoupon) => {
+            if (err) {
+                console.log(err);
+                res.sendStatus(404);
+                return;
+            }
+            res.sendStatus(200);
+        }
+    );
+});
 
-// app.post('/coupon/:id'), (req, res) => {
-//     // const couponId = ObjectId(req.params.id);
-//     // db.collation('coupons').findOneAndUpdate(
-//     //     { _id: couponId },
-//     //     { $set: req.body },
-//     //     { returnNewDocument: true },
-//     //     (err, foundedCoupon) => {
-//     //         console.log(foundedCoupon)
-//     //     }
-//     // );
-//     res.send('hey')
-// }
-// db.collection('users').findOneAndUpdate({
-//     _id: couponId
-// },
-//     { $set: { "code": "ryueyruer" } },
-//     (err, updatedCoupon) => {
-//         if (err) {
-//             console.log(err);
-//             res.sendStatus(404);
-//             return;
-//         }
-//         res.json(updatedCoupon);
-//     }
-// );
-// });
+
 
 app.listen(3000, () => {
     console.log('cupon app listning now to port 3000!');
