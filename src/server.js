@@ -48,7 +48,7 @@ app.get('/coupon/:id', (req, res) => {
     }, (err, foundedCoupon) => {
         if (err) {
             console.log(err);
-            res.sendStatus(404);
+            res.sendStatus(500);
             return;
         }
         res.json(foundedCoupon).sendStatus(200);
@@ -64,6 +64,10 @@ app.post('/coupon/:id', (req, res) => {
         (err, updatedCoupon) => {
             if (err) {
                 console.log(err);
+                res.sendStatus(500);
+                return;
+            }
+            if (updatedCoupon.value === null) {
                 res.sendStatus(404);
                 return;
             }
@@ -82,10 +86,34 @@ app.post('/coupon/:id/redeem', (req, res) => {
         (err, updatedCoupon) => {
             if (err) {
                 console.log(err);
+                res.sendStatus(500);
+                return;
+            }
+            if (updatedCoupon.value === null) {
                 res.sendStatus(404);
                 return;
             }
             res.sendStatus(200);
+        }
+    );
+});
+
+app.delete('/coupon/:id', (req, res) => {
+    const couponId = ObjectId(req.params.id);
+    db.collection('coupons').findOneAndDelete(
+        {
+            _id: couponId
+        }, (err, report) => {
+            if (err) {
+                console.log(err);
+                res.sendStatus(500);
+                return;
+            }
+            if (report.value === null) {
+                res.sendStatus(404);
+                return;
+            }
+            res.sendStatus(204);
         }
     );
 });
