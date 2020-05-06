@@ -2,7 +2,9 @@ const express = require('express');
 const app = express();
 const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectID;
-const generateRandomCodeCupon = require('./../public/utils/generateRandomCodeCupon.js');
+const generateRandomCodeCupon = require('../public/utils/generateRandomCodeCupon.js');
+
+app.use(express.static('public'));
 
 //Mongo setup
 const client = new MongoClient('mongodb://localhost:27017', { useUnifiedTopology: true });
@@ -27,7 +29,7 @@ app.put('/coupon', (req, res) => {
             res.sendStatus(500);
             return;
         }
-        res.sendStatus(201);
+        res.json(newCupon.ops[0]);
     });
 });
 
@@ -37,7 +39,7 @@ app.get('/coupon', (req, res) => {
             console.log(err);
             res.send(400);
         }
-        res.json(cupons).sendStatus(200);
+        res.json(cupons);
     });
 });
 
@@ -51,7 +53,7 @@ app.get('/coupon/:id', (req, res) => {
             res.sendStatus(500);
             return;
         }
-        res.json(foundedCoupon).sendStatus(200);
+        res.json(foundedCoupon);
     });
 });
 
