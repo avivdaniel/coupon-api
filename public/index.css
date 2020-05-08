@@ -11,21 +11,26 @@ body {
 }
 
 .intro {
-display: flex;
-flex-direction: column;
+width: 100%;
+/* display: flex;
+flex-direction: column; */
 height: 100vh;
 max-height: 500px;
+padding: 20px;
 background-image: url('https://images.unsplash.com/photo-1561715276-a2d087060f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80');
 background-size: cover;
 background-position: center;
 }
 
 h1 {
+    text-transform: uppercase;
+    letter-spacing: 0.5rem;
+    line-height: 3rem;
     padding: 20px;
     text-align: center;
     color: white;
     margin-bottom: 5rem;
-    font-size: 4rem;
+    font-size: 2rem;
 }
 
 button {
@@ -58,5 +63,32 @@ border-color:#BBBBBB;
 }
 
 h2 {
+    font-size: 23px;
+    text-transform: uppercase;
     color: white;
+}
+
+.coupon {
+text-align: center;
+display: flex;
+align-items: center;
+justify-content: center;
+color: white;
+height: 220px;
+margin: 20px auto;
+box-shadow: 11px 13px 40px -15px rgba(0,0,0,0.6);
+border-radius: 5px;
+background: rgb(188,144,93);
+background: linear-gradient(142deg, rgba(188,144,93,1) 12%, rgba(71,103,131,1) 85%);
+}
+
+.code-displayer {
+    font-weight: 800;
+    font-size: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5rem;
+}
+
+.coupon-content {
+    margin: auto 0;
 }
