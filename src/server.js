@@ -120,6 +120,24 @@ app.delete('/coupon/:id', (req, res) => {
     );
 });
 
+// GET /coupon/search/:code
+
+app.get('/coupon/search/:code', (req, res) => {
+    const codeId = req.params.code;
+    db.collection('coupons').find({ "code": codeId }).toArray((err, matchedCoupon) => {
+        if (err) {
+            console.log(err);
+            res.sendStatus(400);
+            return;
+        }
+        if (matchedCoupon.length === 0) {
+            res.sendStatus(404);
+            return;
+        }
+        console.log(matchedCoupon);
+        res.json(matchedCoupon);
+    });
+});
 
 
 app.listen(3000, () => {
